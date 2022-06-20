@@ -42,10 +42,10 @@ namespace MainForm
             Graphics gYZ = pbYZ.CreateGraphics();
             for(int i=0;i<bullets.Length;i++)
             {
-                if(bullets[i].X>-300 && bullets[i].X < 150&& bullets[i].Y > -300 && bullets[i].Y < 150)
+                if (bullets[i].X > -300 && bullets[i].X < 150 && bullets[i].Y > -300 && bullets[i].Y < 150)
                     bXY.SetPixel(150 + bullets[i].X, 150 + bullets[i].Y, Color.Red);
                 if (bullets[i].X > -300 && bullets[i].X < 150 && bullets[i].Z > -100 && bullets[i].Z < 200)
-                    bXZ.SetPixel(100 + bullets[i].Z, 150 + bullets[i].X, Color.Red);
+                    bXZ.SetPixel(150 + bullets[i].X, 200 - bullets[i].Z, Color.Red);
                 if (bullets[i].Y > -300 && bullets[i].Y < 150 && bullets[i].Z > -100 && bullets[i].Z < 200)
                     bYZ.SetPixel(100 + bullets[i].Z, 150 + bullets[i].Y, Color.Red);
             }

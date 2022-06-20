@@ -65,7 +65,7 @@
             // 
             // pbXZ
             // 
-            this.pbXZ.Location = new System.Drawing.Point(332, 12);
+            this.pbXZ.Location = new System.Drawing.Point(12, 332);
             this.pbXZ.Name = "pbXZ";
             this.pbXZ.Size = new System.Drawing.Size(300, 300);
             this.pbXZ.TabIndex = 1;
@@ -73,7 +73,7 @@
             // 
             // pbYZ
             // 
-            this.pbYZ.Location = new System.Drawing.Point(12, 332);
+            this.pbYZ.Location = new System.Drawing.Point(332, 12);
             this.pbYZ.Name = "pbYZ";
             this.pbYZ.Size = new System.Drawing.Size(300, 300);
             this.pbYZ.TabIndex = 2;
@@ -280,7 +280,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(654, 662);
+            this.ClientSize = new System.Drawing.Size(654, 661);
             this.Controls.Add(this.numSZ);
             this.Controls.Add(this.numDY);
             this.Controls.Add(this.numMY);

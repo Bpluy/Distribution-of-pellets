@@ -34,17 +34,20 @@ namespace MainForm
         }
         public void DrawGraphics(Bullet[] bullets)
         {
-            Bitmap bXY = new Bitmap("target.bmp");
-            Bitmap bXZ = new Bitmap("whitefon.bmp");
-            Bitmap bYZ = new Bitmap("whitefon.bmp");
+            Bitmap bXY = new Bitmap(Properties.Resources.target);
+            Bitmap bXZ = new Bitmap(Properties.Resources.XZ);
+            Bitmap bYZ = new Bitmap(Properties.Resources.YZ);
             Graphics gXY = pbXY.CreateGraphics();
             Graphics gXZ = pbXZ.CreateGraphics();
             Graphics gYZ = pbYZ.CreateGraphics();
             for(int i=0;i<bullets.Length;i++)
             {
-                bXY.SetPixel(150 + bullets[i].X, 150 + bullets[i].Y, Color.Red);
-                bXZ.SetPixel(bullets[i].Z, 150 + bullets[i].X, Color.Red);
-                bYZ.SetPixel(bullets[i].Z, 150 + bullets[i].Y, Color.Red);
+                if(bullets[i].X>-300 && bullets[i].X < 150&& bullets[i].Y > -300 && bullets[i].Y < 150)
+                    bXY.SetPixel(150 + bullets[i].X, 150 + bullets[i].Y, Color.Red);
+                if (bullets[i].X > -300 && bullets[i].X < 150 && bullets[i].Z > -100 && bullets[i].Z < 200)
+                    bXZ.SetPixel(100 + bullets[i].Z, 150 + bullets[i].X, Color.Red);
+                if (bullets[i].Y > -300 && bullets[i].Y < 150 && bullets[i].Z > -100 && bullets[i].Z < 200)
+                    bYZ.SetPixel(100 + bullets[i].Z, 150 + bullets[i].Y, Color.Red);
             }
             gXY.DrawImage(bXY, new Point(0, 0));
             gXZ.DrawImage(bXZ, new Point(0, 0));

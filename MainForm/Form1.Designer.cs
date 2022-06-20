@@ -263,7 +263,7 @@
             131072});
             this.numSZ.Location = new System.Drawing.Point(435, 545);
             this.numSZ.Maximum = new decimal(new int[] {
-            1,
+            3,
             0,
             0,
             0});
@@ -280,7 +280,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(654, 661);
+            this.ClientSize = new System.Drawing.Size(654, 662);
             this.Controls.Add(this.numSZ);
             this.Controls.Add(this.numDY);
             this.Controls.Add(this.numMY);

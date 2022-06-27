@@ -20,7 +20,7 @@ namespace MainForm.Views
         double I = 10;
         Graphics g, g1;
         Pen pen = new Pen(Color.Black);
-        public ShootForm(Bullet[] bulletsGen)
+        public ShootForm(Bullet[] bulletsGen,int max)
         {
             InitializeComponent();
             g = pictureBox1.CreateGraphics();
@@ -85,7 +85,8 @@ namespace MainForm.Views
             {
                 I = 10;
                 timerDraw.Enabled = false;
-                buttonStart.Text = "Пуск"; Score score = new Score();
+                buttonStart.Text = "Пуск"; 
+                Score score = new Score();
                 CheckResult(score);
                 string msg = "Попаданий: " + (bullets.Length - score.numMiss).ToString() +
                     ", промахов: " + score.numMiss.ToString() +

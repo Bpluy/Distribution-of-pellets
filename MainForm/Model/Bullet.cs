@@ -20,21 +20,23 @@ namespace MainForm.Model
             Z = 0;
         }
 
-        public void GenXYZ(double MX,double MY, double DX, double DY, double Sigma)
-        {
-            
+        public void GenXYZ()
+        {            
             double x = 0, y = 0, z;
+            double KX = r.NextDouble() * 2 + 18;
+            double KY = r.NextDouble() * 2 + 19;
+            double KZ = r.NextDouble() * 0.5 + 2;
             for(int i=0; i<12; i++)
             {
                 x += r.NextDouble();
                 y += r.NextDouble();
             }
-            x = (x-6) * DX + MX;
-            y = (y-6) * DY + MY;
-            z = Sigma * Math.Sqrt(2 * Math.Log(1 / (1 - r.NextDouble())));
-            X = (int)Math.Round(x*10);            
-            Y = (int)Math.Round(y*10);
-            Z = (int)Math.Round(z*20);
+            x = KX * (x-6);
+            y = KY * (y-6);
+            z = KZ * Math.Sqrt(2 * Math.Log(1 / (1 - r.NextDouble())));
+            X = (int)Math.Round(x);            
+            Y = (int)Math.Round(y);
+            Z = (int)Math.Round(z);
         }
     }
 }

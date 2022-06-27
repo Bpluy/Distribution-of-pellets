@@ -15,7 +15,8 @@ namespace MainForm
 {
     public partial class MainForm : Form
     {
-        Bullet[] bullets;
+        Bullet[,] bullets;
+        int currentExperimentNumber = 0;
         public MainForm()
         {
             InitializeComponent();
@@ -23,19 +24,22 @@ namespace MainForm
 
         private void buttonGenerate_Click(object sender, EventArgs e)
         {
-            bullets = new Bullet[(int)numDrob.Value];
-            StreamWriter filePath = new StreamWriter("output.txt");
-            for (int i = 0; i < bullets.Length; i++)
+            bullets = new Bullet[(int)numExperiments.Value, (int)numDrob.Value];
+            for (int i = 0; i < numExperiments.Value; i++)
             {
-                bullets[i] = new Bullet();
-                bullets[i].GenXYZ((double)numMX.Value, (double)numMY.Value, (double)numDX.Value, (double)numDY.Value, (double)numSZ.Value);
-                filePath.WriteLine("[" + (i+1) + "] " + bullets[i].X.ToString() + " " + bullets[i].Y.ToString() + " " + bullets[i].Z.ToString());
+                for (int i1 = 0; i1 < numDrob.Value; i1++)
+                {
+                    bullets[i, i1] = new Bullet();
+                    bullets[i, i1].GenXYZ();
+                }
             }
-            filePath.Close();
-            DrawGraphics(bullets);
+            
+            buttonShow.Enabled = true;
             buttonShoot.Enabled = true;
+            numCurrentExperiment.Enabled = true;
+            numCurrentExperiment.Maximum = numExperiments.Value;
         }
-        public void DrawGraphics(Bullet[] bullets)
+        public void DrawGraphics(Bullet[,] bullets, int num)
         {
             Bitmap bXY = new Bitmap(Properties.Resources.target);
             Bitmap bXZ = new Bitmap(Properties.Resources.XZ);
@@ -43,14 +47,14 @@ namespace MainForm
             Graphics gXY = pbXY.CreateGraphics();
             Graphics gXZ = pbXZ.CreateGraphics();
             Graphics gYZ = pbYZ.CreateGraphics();
-            for(int i=0;i<bullets.Length;i++)
+            for(int i = 0; i < numDrob.Value; i++)
             {
-                if (bullets[i].X > -300 && bullets[i].X < 150 && bullets[i].Y > -300 && bullets[i].Y < 150)
-                    bXY.SetPixel(150 + bullets[i].X, 150 - bullets[i].Y, Color.Red);
-                if (bullets[i].X > -300 && bullets[i].X < 150 && bullets[i].Z > -100 && bullets[i].Z < 200)
-                    bXZ.SetPixel(150 + bullets[i].X, 299 - bullets[i].Z, Color.Red);
-                if (bullets[i].Y > -300 && bullets[i].Y < 150 && bullets[i].Z > -100 && bullets[i].Z < 200)
-                    bYZ.SetPixel(bullets[i].Z, 150 - bullets[i].Y, Color.Red);
+                if (bullets[num, i].X > -300 && bullets[num, i].X < 150 && bullets[num, i].Y > -300 && bullets[num, i].Y < 150)
+                    bXY.SetPixel(150 + bullets[num, i].X, 150 - bullets[num, i].Y, Color.Red);
+                if (bullets[num, i].X > -300 && bullets[num, i].X < 150 && bullets[num, i].Z > -100 && bullets[num, i].Z < 200)
+                    bXZ.SetPixel(150 + bullets[num, i].X, 299 - bullets[num, i].Z, Color.Red);
+                if (bullets[num, i].Y > -300 && bullets[num, i].Y < 150 && bullets[num, i].Z > -100 && bullets[num, i].Z < 200)
+                    bYZ.SetPixel(bullets[num, i].Z, 150 - bullets[num, i].Y, Color.Red);
             }
             gXY.DrawImage(bXY, new Point(0, 0));
             gXZ.DrawImage(bXZ, new Point(0, 0));
@@ -59,8 +63,79 @@ namespace MainForm
 
         private void buttonShoot_Click(object sender, EventArgs e)
         {
-            ShootForm shootForm = new ShootForm(bullets);            
+            Bullet[] buf = new Bullet[(int)numDrob.Value];
+            for (int i = 0; i < buf.Length; i++)
+            {
+                buf[i] = bullets[currentExperimentNumber, i];
+            }
+            ShootForm shootForm = new ShootForm(buf, (int)numDrob.Value);            
             shootForm.ShowDialog(this);
+        }
+
+        private void buttonShow_Click(object sender, EventArgs e)
+        {
+            currentExperimentNumber = (int)numCurrentExperiment.Value - 1;
+            DrawGraphics(bullets, currentExperimentNumber);
+            Score score = new Score();
+            CheckResult(score);
+            labelInfo.Text = "Попаданий: " + ((int)numDrob.Value - score.numMiss).ToString() +
+                    ", промахов: " + score.numMiss.ToString() +
+                    "\nПопаданий в кольцо #1: " + score.numCircle1.ToString() +
+                    "\nПопаданий в кольцо #2: " + score.numCircle2.ToString() +
+                    "\nПопаданий в кольцо #3: " + score.numCircle3.ToString() +
+                    "\nПопаданий в кольцо #4: " + score.numCircle4.ToString() +
+                    "\nПопаданий в кольцо #5: " + score.numCircle5.ToString() +
+                    "\nКоличество очков: " + score.score.ToString();
+        }
+        private void CheckResult(Score score)
+        {
+            double length;
+            int x, y;
+            for (int i = 0; i < (int)numDrob.Value; i++)
+            {
+                x = Math.Abs(bullets[currentExperimentNumber, i].X);
+                y = Math.Abs(bullets[currentExperimentNumber, i].Y);
+                length = Math.Sqrt(Math.Pow(x, 2) + Math.Pow(y, 2));
+                if (length <= 15)
+                {
+                    score.numCircle1++;
+                    score.score += 5;
+                }
+                else
+                {
+                    if (length <= 30)
+                    {
+                        score.numCircle2++;
+                        score.score += 4;
+                    }
+                    else
+                    {
+                        if (length <= 45)
+                        {
+                            score.numCircle3++;
+                            score.score += 3;
+                        }
+                        else
+                        {
+                            if (length <= 60)
+                            {
+                                score.numCircle4++;
+                                score.score += 2;
+                            }
+                            else
+                            {
+                                if (length <= 75)
+                                {
+                                    score.numCircle5++;
+                                    score.score++;
+                                }
+                                else
+                                    score.numMiss++;
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 }

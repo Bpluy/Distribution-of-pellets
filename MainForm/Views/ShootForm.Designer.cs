@@ -1,6 +1,4 @@
-﻿using System.Drawing;
-
-namespace MainForm.Views
+﻿namespace MainForm.Views
 {
     partial class ShootForm
     {
@@ -114,7 +112,7 @@ namespace MainForm.Views
             this.Name = "ShootForm";
             this.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "ShootForm";
+            this.Text = "Анимация выстрела";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numDiam)).EndInit();
             this.ResumeLayout(false);

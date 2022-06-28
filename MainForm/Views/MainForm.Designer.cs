@@ -215,7 +215,7 @@
             this.MaximumSize = new System.Drawing.Size(670, 700);
             this.MinimumSize = new System.Drawing.Size(670, 700);
             this.Name = "MainForm";
-            this.Text = "Form1";
+            this.Text = "Shotgun Modeler";
             ((System.ComponentModel.ISupportInitialize)(this.pbXY)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbXZ)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbYZ)).EndInit();

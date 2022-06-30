@@ -16,12 +16,9 @@ namespace MainForm.Model
             Z = 0;
         }
 
-        public void GenXYZ()
+        public void GenXYZ(double KX, double KY, double KZ)
         {            
             double x = 0, y = 0, z;
-            double KX = r.NextDouble() * 2 + 18;
-            double KY = r.NextDouble() * 2 + 19;
-            double KZ = r.NextDouble() * 0.5 + 2;
             for(int i=0; i<12; i++)
             {
                 x += r.NextDouble();

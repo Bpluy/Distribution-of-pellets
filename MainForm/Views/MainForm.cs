@@ -23,14 +23,14 @@ namespace MainForm
                 for (int i1 = 0; i1 < numDrob.Value; i1++)
                 {
                     bullets[i, i1] = new Bullet();
-                    bullets[i, i1].GenXYZ();
+                    bullets[i, i1].GenXYZ((double)numKX.Value, (double)numKY.Value, (double)numKZ.Value);
                 }
             }
             
-            buttonShow.Enabled = true;
             buttonShoot.Enabled = true;
             numCurrentExperiment.Enabled = true;
             numCurrentExperiment.Maximum = numExperiments.Value;
+            ShowViews();
         }
         public void DrawGraphics(Bullet[,] bullets, int num)
         {
@@ -65,7 +65,7 @@ namespace MainForm
             shootForm.ShowDialog(this);
         }
 
-        private void buttonShow_Click(object sender, EventArgs e)
+        private void ShowViews()
         {
             currentExperimentNumber = (int)numCurrentExperiment.Value - 1;
             DrawGraphics(bullets, currentExperimentNumber);
@@ -129,6 +129,11 @@ namespace MainForm
                     }
                 }
             }
+        }
+
+        private void numCurrentExperiment_ValueChanged(object sender, EventArgs e)
+        {
+            ShowViews();
         }
     }
 }
